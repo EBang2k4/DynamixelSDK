@@ -58,18 +58,27 @@ sudo apt install ros-noetic-teleop-twist-keyboard ros-noetic-dynamixel-sdk ros-n
 ifconfig
 ```
 
-Ghi lại IP (ví dụ: `192.168.1.100`).
+Ghi lại IP của PI (ví dụ: `192.168.1.100`).
+Ghi lại IP của Laptop (ví dụ: `192.168.1.122`).
 
-- Trên **cả hai thiết bị**, thêm biến môi trường vào `~/.bashrc`:
+- Trên **Pi 3**, thêm biến môi trường vào `~/.bashrc`:
 
 ```bash
-echo "export ROS_MASTER_URI=http://192.168.1.100:11311" >> ~/.bashrc
-echo "export ROS_HOSTNAME=your_device_ip" >> ~/.bashrc
+echo "export ROS_MASTER_URI=http://LAPTOP_IP" >> ~/.bashrc
+echo "export ROS_HOSTNAME=PI_IP" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-**Lưu ý:** Thay `your_device_ip` bằng IP của laptop hoặc Pi 3 tương ứng.
+- Trên **LAPTOP**, thêm biến môi trường vào `~/.bashrc`:
 
+```bash
+echo "export ROS_MASTER_URI=http://LAPTOP_IP" >> ~/.bashrc
+echo "export ROS_HOSTNAME=LAPTOP_IP" >> ~/.bashrc
+source ~/.bashrc
+```
+
+**Lưu ý:** Thay `PI_IP` và `LAPTOP_IP` bằng IP của Pi 3 và Laptop tương ứng.
+ 
 ---
 
 ## Sử dụng
@@ -85,7 +94,7 @@ roscore
 - Mở terminal mới, chạy `teleop` để điều khiển:
 
 ```bash
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+rosrun teleop teleop_node
 ```
 
 ---
@@ -95,13 +104,13 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 - Chạy node camera để phát video:
 
 ```bash
-rosrun uvc_camera uvc_camera_node
+roslaunch raspicam_node camerav2_1280x760.launch
 ```
 
-- Chạy node điều khiển động cơ (giả sử package có node `motor_control`):
+- Chạy node điều khiển động cơ:
 
 ```bash
-rosrun your_package_name motor_control
+rosrun dynamixel_sdk_examples velocity_node
 ```
 
 ---
@@ -111,17 +120,18 @@ rosrun your_package_name motor_control
 - Trên laptop, xem video từ camera:
 
 ```bash
-rosrun image_view image_view image:=/camera/image_raw
+rqt
 ```
+Chọn Visualization -> raspicam_node/image/compressed
 
-- Dùng phím (theo hướng dẫn `teleop_twist_keyboard`) để điều khiển động cơ trên Pi 3.
+- Dùng phím (theo hướng dẫn `teleop_node`) để điều khiển động cơ trên Pi 3.
 
 ---
 
 ## Lưu ý
 
-- Thay `your_username/your_repository` và `your_package_name` bằng thông tin thực tế.
 - Đảm bảo camera và động cơ được kết nối đúng (xem tài liệu trong package).
+- Check hoạt động của động cơ khi khởi động bằng DXL Torque (nếu là 1 thì hoạt động bình thường).
 - Nếu gặp lỗi mạng, kiểm tra IP và firewall (cổng `11311`).
 
 ---
