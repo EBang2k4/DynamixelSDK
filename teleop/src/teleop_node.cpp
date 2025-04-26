@@ -85,22 +85,22 @@ private:
     bool publish = false;
 
     switch (key) {
-      case 'd':
+      case 'w':
         velocities_[0] = std::min(velocities_[0] + velocity_step_, max_velocity_);
         velocities_[1] = std::min(velocities_[1] + velocity_step_, max_velocity_);
         publish = true;
         break;
-      case 'a':
+      case 's':
         velocities_[0] = std::max(velocities_[0] - velocity_step_, -max_velocity_);
         velocities_[1] = std::max(velocities_[1] - velocity_step_, -max_velocity_);
         publish = true;
         break;
-      case 's':
+      case 'a':
         velocities_[0] = std::min(velocities_[0] + velocity_step_, max_velocity_);
         velocities_[1] = std::max(velocities_[1] - velocity_step_, -max_velocity_);
         publish = true;
         break;
-      case 'w':
+      case 'd':
         velocities_[0] = std::max(velocities_[0] - velocity_step_, -max_velocity_);
         velocities_[1] = std::min(velocities_[1] + velocity_step_, max_velocity_);
         publish = true;
