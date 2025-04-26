@@ -122,7 +122,7 @@ rosrun dynamixel_sdk_examples velocity_node
 ```bash
 rqt
 ```
-Chọn Plugin -> Visualization -> raspicam_node/image/compressed
+Chọn Plugin -> Visualization -> Image View -> raspicam_node/image/compressed
 
 - Dùng phím (theo hướng dẫn `teleop_node`) để điều khiển động cơ trên Pi 3.
 
